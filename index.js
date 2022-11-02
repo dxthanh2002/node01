@@ -5,6 +5,12 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT,function () {
     console.log("Server is running...");
 });
+//
+app.use(function (req, res, next){
+    res.header("Access-Control-Allow-Origin","*");
+    res.header("Access-Control-Allow-Header","Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 // config to connect
 const configDB = {
     host: "139.180.186.20",
@@ -76,7 +82,7 @@ app.get("/get-students-name",function (req,res){
 })
 // api list students theo ten class
 app.get("/get-students-classname",function (req,res){
-    const emal = req.query.emal;
+    const email = req.query.emal;
     const name = req.query.name;
     const cid = req.query.cid;
     const sql = `select * from students where cid in(select cid from classes where name like '%${q}]%')`;
